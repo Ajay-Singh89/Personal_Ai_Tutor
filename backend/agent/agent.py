@@ -29,6 +29,21 @@ llm = ChatGoogleGenerativeAI(
 
 async def run_agent(user_message: str):
 
-    response = await llm.ainvoke(user_message)
+        messages = [
+        SystemMessage(
+            content="""
+            You are a helpful and patient AI tutor.
+            Explain concepts clearly and simply.
+            Adapt your explanations to the student's level.
+            Use examples when helpful.
+            Encourage the student to understand the concept rather than
+            simply giving them the answer.
+            """
+        ),
+
+        HumanMessage(content=user_messages)
+    ]
+
+    response = await llm.ainvoke(message)
 
     return response.content[0]["text"]
